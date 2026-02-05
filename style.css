@@ -1,0 +1,1718 @@
+/* --- Root Variables & Reset --- */
+:root {
+    /* Original Theme Colors */
+    --deep-green: #0a2e24;
+    --accent-gold: #c5a059;
+    --muted-gold: #e5c17b;
+    --soft-white: #f8faf9;
+    --pure-white: #ffffff;
+    --text-gray: #4a5568;
+    
+    /* OxygenOS 16 Agriculture Palette */
+    --primary-green: #2f7d32;
+    --accent-green: #6fbf73;
+    --soft-green: #e9f5ec;
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+    
+    /* UI Constants */
+    --glass: rgba(255, 255, 255, 0.82);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    --radius-xl: 24px;
+
+    --pista-glass: rgba(219, 231, 218, 0.65); 
+    --pista-border: rgba(255, 255, 255, 0.5);
+    --deep-pista: #2e4d2e;
+    --white-bright: #ffffff;
+}
+
+/* --- Global Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* REMOVED: cursor: none */
+}
+
+html {
+    scroll-behavior: smooth;
+    max-width: 100%;
+    overflow-x: hidden; 
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--deep-green);
+    color: var(--deep-green);
+    line-height: 1.6;
+    overflow-x: hidden; 
+    /* The browser default cursor will now reappear automatically */
+}
+
+/* --- Custom Cursor Classes REMOVED --- */
+/* (Deleted .cursor-dot and .cursor-outline) */
+/* --- Navigation --- */
+.main-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 15px 5%;
+    background: rgba(170, 210, 180, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(10, 46, 36, 0.05);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.brand img {
+    height: 76px;
+    width: 76px;
+    object-fit: cover;
+    border-radius: 50%;
+    background: #ffffff;
+    padding: 7px;
+    box-shadow:
+        0 10px 24px rgba(26, 47, 33, 0.16),
+        inset 0 0 0 1px rgba(144, 190, 150, 0.35);
+    transition: 
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.brand img:hover {
+    transform: scale(1.04);
+    box-shadow:
+        0 14px 32px rgba(26, 47, 33, 0.22),
+        inset 0 0 0 1px rgba(144, 190, 150, 0.45);
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+}
+
+.univ-name {
+    font-weight: 900;
+    font-size: 1.18rem;
+    letter-spacing: -0.75px;
+    line-height: 1.05;
+    color: #14251a;
+}
+
+.event-name {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #14251a;
+    opacity: 0.85;
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    align-items: center;
+}
+
+.menu a {
+    text-decoration: none;
+    color: var(--deep-green);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.menu a:hover {
+    color: var(--accent-gold);
+}
+
+.nav-cta {
+    background: var(--deep-green);
+    color: var(--pure-white) !important;
+    padding: 12px 28px;
+    border-radius: 50px;
+    transition: transform 0.3s var(--ease);
+}
+
+.nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(10, 46, 36, 0.2);
+}
+/* =========================
+   GLOBAL RESET PRECAUTION
+   ========================= */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* --- Mobile Floating Nav --- */
+.mobile-floating-nav {
+    position: fixed;
+    bottom: 30px;
+    /* Use 50vw to ensure it centers relative to the viewport, not the parent */
+    left: 50vw; 
+    transform: translateX(-50%);
+    width: 92vw;
+    max-width: 450px;
+    z-index: 9999;
+    /* Ensure no margins interfere with the centering */
+    margin: 0 auto; 
+}
+
+.glass-pill {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 15px;
+    background: var(--pista-glass);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--pista-border);
+    border-radius: 100px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 
+                inset 0 0 10px rgba(255, 255, 255, 0.2);
+    width: 100%; /* Fill the container width */
+}
+
+.pill-item {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--deep-pista);
+    transition: transform 0.2s ease;
+    flex: 1;
+}
+
+.pill-icon {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.pill-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    opacity: 0.8;
+}
+
+.pill-item:active {
+    transform: scale(0.85);
+}
+
+.pill-item.active .pill-icon {
+    transform: translateY(-2px);
+}
+
+.pill-item.active .pill-label {
+    opacity: 1;
+    color: #000;
+}
+
+/* Hide on Desktop */
+@media (min-width: 769px) {
+    .mobile-floating-nav {
+        display: none;
+    }
+}
+
+/* =========================
+   MOBILE FIXES
+   ========================= */
+@media (max-width: 768px) {
+    html, body {
+        /* Prevents horizontal "jiggling" which causes off-center elements */
+        overflow-x: hidden; 
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-container, .brand-text, .menu {
+        max-width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .menu {
+        gap: 20px;
+    }
+
+    /* Override widths to ensure exact centering on small screens */
+    .mobile-floating-nav {
+        width: 92%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    img, video {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* =========================
+   TOUCH DEVICE SAFETY
+   ========================= */
+@media (hover: none) {
+    .pill-item:hover,
+    .brand img:hover,
+    .nav-cta:hover {
+        transform: none !important;
+        box-shadow: inherit !important;
+    }
+}
+/* --- Hero Section --- */
+.hero {
+    /* dvh prevents the height jump on mobile browser scroll */
+    height: 100vh;
+    height: 100dvh; 
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+}
+
+.hero-parallax {
+    position: absolute;
+    inset: -10%;
+    background: url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    z-index: -2;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(10, 46, 36, 0.85), rgba(10, 46, 36, 0.4));
+    z-index: -1;
+}
+
+.hero-content {
+    color: var(--pure-white);
+    max-width: 900px;
+    padding: 0 25px;
+    width: 100%;
+}
+
+.tag {
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--accent-gold);
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(2.5rem, 8vw, 4.8rem);
+    line-height: 1.05;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.gradient-text {
+    background: linear-gradient(to right, #ffffff, var(--muted-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    opacity: 0.9;
+    margin-bottom: 40px;
+    font-weight: 300;
+    max-width: 600px;
+    margin-inline: auto;
+}
+
+/* Base Actions Layout */
+.hero-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Original Button Styles preserved */
+.btn-gold, .btn-glass {
+    padding: 16px 35px;
+    border-radius: 50px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    transition: 0.3s var(--ease);
+    cursor: pointer;
+}
+
+.btn-gold {
+    background: var(--accent-gold);
+    color: var(--deep-green);
+}
+
+.btn-glass {
+    background: var(--glass);
+    color: var(--pure-white);
+    border: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* =========================
+   SMARTPHONE ALIGNMENT
+   ========================= */
+@media (max-width: 580px) {
+    .hero {
+        /* Prevents text from being hidden behind your floating nav */
+        padding-bottom: 60px; 
+    }
+
+    .hero-actions {
+        /* Stack vertically for a cleaner mobile look */
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .btn-gold, .btn-glass {
+        width: 100%;
+        padding: 18px 20px; /* Larger tap target for fingers */
+        text-align: center;
+    }
+
+    h1 {
+        line-height: 1.15;
+        margin-bottom: 15px;
+    }
+}
+/* =========================================
+   PRESIDENT MESSAGE SECTION - LUXURY OXYGENOS 16
+========================================= */
+
+/* --- Section Container --- */
+#president-message {
+    padding: clamp(80px, 15vh, 180px) 0;
+    background: linear-gradient(180deg, #eaf2eb 0%, #d8e6dc 100%);
+    font-family: 'Public Sans', 'Inter', system-ui, sans-serif;
+    position: relative;
+    color: #1a2f21;
+    overflow: hidden;
+}
+
+/* --- Ambient Background Glows --- */
+#president-message::before,
+#president-message::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    z-index: 0;
+}
+
+#president-message::before {
+    width: 600px;
+    height: 600px;
+    background: rgba(144, 190, 150, 0.12);
+    top: -120px;
+    left: -150px;
+}
+
+#president-message::after {
+    width: 500px;
+    height: 500px;
+    background: rgba(93, 138, 106, 0.1);
+    bottom: -150px;
+    right: -100px;
+}
+
+/* --- Section Title --- */
+#president-message .section-title {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 60px;
+    position: relative;
+    z-index: 1;
+    padding: 0 20px;
+}
+
+#president-message .section-title span {
+    display: inline-block;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin-bottom: 12px;
+    color: #5f7f6a;
+}
+
+#president-message .section-title h2 {
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.2;
+    color: #1a2f21;
+}
+
+/* --- Grid Container (Crucial for Mobile Centering) --- */
+#president-message .grid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Info Card (The Circular Fix) --- */
+#president-message .info-card {
+    /* Use 90% width so the curved edges don't touch the phone screen sides */
+    width: 90%; 
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    
+    /* High Radius for that "Pill" shape on all devices */
+    border-radius: 60px; 
+    
+    /* Extra vertical padding to keep text away from the curves */
+    padding: clamp(50px, 8vw, 100px) clamp(25px, 6vw, 80px);
+    
+    box-shadow: 
+        0 30px 60px rgba(26, 47, 33, 0.08),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* --- Card Icon / Image --- */
+#president-message .card-icon {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: #fff;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(93, 138, 106, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#president-message .card-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- Typography --- */
+#president-message h3 {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 800;
+    color: #1a2f21;
+    margin-bottom: 10px;
+}
+
+#president-message h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #b89552;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+#president-message p {
+    font-size: clamp(15px, 1.1vw, 18px);
+    line-height: 1.7;
+    color: #3d5245;
+    text-align: center;
+}
+
+/* --- MOBILE SPECIFIC OVERRIDES --- */
+@media (max-width: 768px) {
+    #president-message .info-card {
+        /* Forces the radius to stay very round even on small screens */
+        border-radius: 50px !important; 
+        width: 88%; /* Leaves a small gap at the left/right edges */
+        padding: 60px 20px;
+    }
+    
+    #president-message .card-icon {
+        width: 130px;
+        height: 130px;
+    }
+
+    #president-message .section-title {
+        margin-bottom: 40px;
+    }
+}
+/* --- Luxury Highlights Section (Universal Compatible) --- */
+.krishi-highlights {
+    padding: 7.5rem 5%;
+    background-color: #d8e6dc; /* Fallback color */
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(144, 190, 150, 0.08), transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(93, 138, 106, 0.06), transparent 50%),
+        linear-gradient(135deg, #e6f0e8, #d8e6dc);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+/* Section Title */
+.krishi-highlights .section-title {
+    text-align: center;
+    margin-bottom: 4.5rem;
+}
+
+.krishi-highlights .section-title span {
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary-green);
+    display: inline-block;
+    position: relative;
+}
+
+.krishi-highlights .section-title span::after {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    background: var(--primary-green);
+    margin: 0.375rem auto 0;
+    border-radius: 2px;
+}
+
+.krishi-highlights .section-title h2 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-top: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.krishi-highlights .section-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 44rem;
+    margin: 0.75rem auto 0;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+/* Grid Layout */
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 2.25rem;
+}
+
+/* Highlight Card */
+.highlight-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 1.25rem 3.75rem rgba(15, 23, 42, 0.12), 0 0.375rem 1.25rem rgba(15, 23, 42, 0.08);
+    transition: transform 0.6s ease, box-shadow 0.6s ease, background 0.6s ease-in-out;
+}
+
+.highlight-card:hover,
+.highlight-card:focus {
+    transform: translateY(-0.75rem) scale(1.03);
+    box-shadow: 0 2.1875rem 5rem rgba(15, 23, 42, 0.16), 0 0.75rem 1.875rem rgba(15, 23, 42, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Image Effects */
+.highlight-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 1.5rem;
+    transition: transform 1s ease, filter 1s ease;
+}
+
+.highlight-card:hover img,
+.highlight-card:focus img {
+    transform: scale(1.12) rotateZ(1deg);
+    filter: brightness(1.05);
+}
+
+/* Overlay */
+.highlight-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2.25rem 1.875rem;
+    background: linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,0.92) 95%);
+    color: #ffffff;
+    opacity: 0;
+    transform: translateY(2.5rem);
+    transition: all 0.6s ease;
+    border-radius: 0 0 1.5rem 1.5rem;
+}
+
+.highlight-card:hover .highlight-overlay,
+.highlight-card:focus .highlight-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.highlight-overlay h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.625rem;
+    letter-spacing: 0.3px;
+}
+
+.highlight-overlay p {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.9);
+}
+
+/* --- Smooth Reveal Animations --- */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(2.5rem) scale(0.98);
+    transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal-up.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 992px) {
+    .menu { display: none; }
+    h1 { font-size: 3rem; }
+}
+
+@media (max-width: 768px) {
+    #president-message { padding: 5rem 1.5rem; }
+    #president-message .info-card {
+        width: 100%;
+        border-radius: 0;
+        padding: 3.75rem 1.5rem;
+        border-left: none;
+        border-right: none;
+    }
+    .krishi-highlights { padding: 5rem 2rem; }
+    .highlight-overlay { opacity: 1; transform: translateY(0); }
+    .highlight-card { border-radius: 1.125rem; }
+}
+/* --- 1. Footer Section Separator --- */
+.section-separator {
+    height: 120px;
+    width: 100%;
+background: #d8e6dc; /* Soft Light Pista */
+    position: relative;
+    z-index: 1;
+}
+
+/* Creates the organic "mound" that the footer sits behind */
+.section-separator::after {
+    content: "";
+    position: absolute;
+    bottom: -60px;
+    left: -5%;
+    width: 110%;
+    height: 120px;
+    background: var(--deep-green);
+
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.03);
+}
+
+/* --- 2. Main Footer Container --- */
+.main-footer {
+    background: var(--deep-green);
+    color: var(--soft-white);
+    padding: 0 0 70px; /* Increased bottom padding for floating card */
+    position: relative;
+    z-index: 10;
+    margin-top: 120px; /* Space for floating QR card */
+}
+
+/* Footer inner container */
+.footer-container {
+    width: 94%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* --- 3. Floating QR Card (Premium Glass) --- */
+.footer-newsletter {
+    background: linear-gradient(180deg, #eaf2eb 0%, #d8e6dc 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: var(--radius-xl);
+    padding: clamp(30px, 5vw, 60px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    transform: translateY(-50%);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    flex-wrap: wrap;
+}
+
+/* QR Card Text */
+.newsletter-content {
+    flex: 1;
+    min-width: 260px;
+}
+
+.newsletter-content h3 {
+    color: var(--text-dark);
+    font-size: clamp(24px, 2.5vw, 32px);
+    margin-bottom: 12px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.newsletter-content p {
+    color: var(--text-muted);
+    max-width: 500px;
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* QR Code Container */
+.newsletter-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 220px;
+    gap: 16px;
+}
+
+.newsletter-qr img {
+    width: 200px;
+    height: 200px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(26, 47, 33, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newsletter-qr img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(26, 47, 33, 0.22);
+}
+
+/* Optional scan prompt */
+.newsletter-qr p {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-align: center;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .footer-newsletter {
+        flex-direction: column;
+        transform: translateY(-30%);
+        padding: 30px 20px;
+        gap: 24px;
+        text-align: center;
+    }
+
+    .newsletter-content {
+        max-width: 100%;
+    }
+
+    .newsletter-qr img {
+        width: 160px;
+        height: 160px;
+    }
+}
+/* --- 4. Footer Grid Layout --- */
+.footer-grid {
+    display: grid;
+    /* Massive 3-column layout */
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: clamp(40px, 6vw, 100px);
+    padding-top: 20px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* --- Footer Brand Container --- */
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 460px;
+    margin-bottom: 12px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- Brand Logo --- */
+.footer-brand img {
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+    object-fit: contain;
+    border-radius: 50%;
+    padding: 26px;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.06), transparent 80%);
+    box-shadow:
+        0 24px 72px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.15),
+        0 0 16px 4px rgba(255, 215, 0, 0.25);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: -24px;
+}
+
+.footer-brand img:hover {
+    transform: translateY(-8px) scale(1.07);
+    box-shadow:
+        0 32px 88px rgba(0, 0, 0, 0.7),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.25),
+        0 0 24px 8px rgba(255, 215, 0, 0.45);
+}
+
+/* --- Brand Text Container --- */
+.brand-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    user-select: none;
+}
+
+/* --- Brand Name (Top Line) --- */
+.brand-name {
+    font-size: 26px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.98);
+    letter-spacing: 0.025em;
+    line-height: 1.15;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.45), 0 0 6px rgba(255, 215, 0, 0.15);
+    position: relative;
+    padding-bottom: 14px; /* space for underline */
+    margin-bottom: 6px;   /* spacing below brand name */
+}
+
+/* --- Golden underline below brand-name only --- */
+.brand-name::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;         /* full width of the text */
+    height: 4px;
+    background: linear-gradient(270deg,
+        rgba(255, 215, 0, 0.7) 0%,
+        rgba(255, 255, 255, 0.9) 50%,
+        rgba(255, 215, 0, 0.7) 100%);
+    border-radius: 3px;
+    filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.8));
+    animation: shimmer 3.5s infinite ease-in-out;
+}
+
+/* --- Brand Event (Bottom Line) --- */
+.brand-event {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(255, 215, 0, 0.9);
+    letter-spacing: 0.04em;
+    cursor: default;
+}
+
+/* --- Description Paragraph --- */
+.footer-brand p {
+    margin-top: 8px;
+    font-size: 17px;
+    line-height: 2.1;
+    letter-spacing: 0.03em;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.93);
+    max-width: 380px;
+    opacity: 0.96;
+    user-select: text;
+    transition: color 0.3s ease;
+}
+
+/* --- Shimmer keyframes for gold line --- */
+@keyframes shimmer {
+    0%, 100% { background-position: 0% 0; }
+    50% { background-position: 200% 0; }
+}
+
+
+.footer-links h4, 
+.footer-contact h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 15px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.6;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    color: var(--accent-gold);
+    padding-left: 5px;
+}
+
+.footer-contact p {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+    opacity: 0.75;
+    font-size: 15px;
+}
+
+.footer-contact i {
+    color: var(--accent-gold);
+    margin-top: 4px;
+    font-size: 18px;
+}
+/* Quick Links Header - matching footer-contact h4 */
+.footer-quick-links h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Remove default list styles */
+.footer-quick-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Spacing between list items */
+.footer-quick-links li {
+    margin-bottom: 15px;
+}
+
+/* Links style matching footer-contact links */
+.footer-quick-links a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.6;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+/* Hover effect consistent with footer-contact */
+.footer-quick-links a:hover {
+    opacity: 1;
+    color: var(--accent-gold);
+    padding-left: 5px;
+}
+
+/* --- 5. Bottom Copyright Bar --- */
+.footer-bottom {
+    padding-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.bottom-links {
+    display: flex;
+    gap: 40px;
+}
+
+.bottom-links a {
+    color: white;
+    text-decoration: none;
+}
+
+/* ---------- Responsive Styles ---------- */
+
+/* Medium Tablets / Smaller Desktops */
+@media (max-width: 1200px) {
+    .footer-newsletter {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 32px;
+        padding: 30px 16px;
+    }
+}
+
+/* Mobile / Tablets */
+@media (max-width: 768px) {
+    .main-footer {
+        margin-top: 120px;
+    }
+
+    .footer-container {
+        width: 100%;
+        padding: 0 16px;
+    }
+
+    .footer-newsletter {
+        width: 100%;
+        padding: 30px 16px;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+        width: 100%;
+        gap: 16px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+
+    /* Brand & contact paragraphs centered */
+    .footer-brand p,
+    .footer-contact p {
+        margin-inline: auto;
+        text-align: center;
+    }
+
+    /* Stack footer-brand vertically and center align */
+    .footer-brand {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        max-width: 100%;
+    }
+
+    .footer-brand img {
+        width: 80px;
+        height: 80px;
+        padding: 10px;
+        margin-top: 0; /* reset uplift on small screens */
+    }
+
+    /* Center social links with spacing */
+    .social-links {
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .footer-quick-links,
+    .footer-contact {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .footer-quick-links ul,
+    .footer-contact p {
+        text-align: center;
+    }
+
+    .footer-quick-links a,
+    .footer-contact p {
+        font-size: 15px;
+    }
+
+    .footer-brand .brand-name {
+        font-size: 22px;
+    }
+
+    .footer-brand .brand-event {
+        font-size: 16px;
+    }
+}
+
+/* Extra Small Screens <480px */
+@media (max-width: 480px) {
+    .footer-container {
+        padding: 0 12px;
+    }
+
+    .footer-newsletter {
+        padding: 24px 12px;
+    }
+
+    .footer-brand img {
+        width: 70px;
+        height: 70px;
+        padding: 8px;
+    }
+
+    .footer-brand p,
+    .footer-contact p {
+        font-size: 14px;
+        line-height: 1.8;
+        max-width: 90%;
+    }
+
+    .social-links {
+        gap: 12px;
+    }
+
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100%;
+    }
+}
+/* --- POINTS OF ATTRACTION: OXYGEN OS 16 DEEP LUXURY --- */
+
+#points-of-attraction {
+    padding: 140px 5%;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(144, 190, 150, 0.12), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(93, 138, 106, 0.08), transparent 40%),
+        #d8e6dc; /* Clean Pista base */
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow: hidden;
+    color-scheme: light dark; /* universal support for dark/light modes */
+}
+
+/* Header Styling */
+#points-of-attraction .section-title {
+    text-align: center;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#points-of-attraction .section-title span {
+    display: inline-block;
+    color: #5f7f6a;                
+    font-weight: 600;
+    letter-spacing: 3px;           
+    text-transform: uppercase;
+    font-size: 13px;
+    margin-bottom: 14px;
+    position: relative;
+}
+
+#points-of-attraction .section-title span::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 2px;
+    background: linear-gradient(90deg, #a8d5ba, #6a9678);
+    margin: 14px auto 0;
+    border-radius: 2px;
+}
+
+#points-of-attraction .section-title h2 {
+    color: #1a2f21;                
+    font-size: clamp(36px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.8px;        
+    margin: 0;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Grid Layout */
+.attraction-grid-v2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 36px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Card Base */
+.attr-item {
+    position: relative;
+    padding: 50px 40px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 48px; /* Squircle Luxury */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    box-shadow: 
+        0 6px 10px -2px rgba(0,0,0,0.02),
+        0 15px 30px -8px rgba(0,0,0,0.03);
+        
+    transition: all 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    text-align: left;
+    z-index: 1;
+}
+
+/* Hover Lift + Glow */
+.attr-item:hover {
+    transform: translateY(-16px) scale(1.03);
+    background: #ffffff;
+    border-color: #a8d5ba;
+    box-shadow: 
+        0 20px 45px -12px rgba(95, 127, 106, 0.14),
+        0 50px 100px -20px rgba(0,0,0,0.05);
+}
+
+/* Surface Luminescence */
+.attr-item::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 48px;
+    background: radial-gradient(circle at top right, rgba(168, 213, 186, 0.15), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+}
+
+.attr-item:hover::after {
+    opacity: 1;
+}
+
+/* Icon Styling */
+.attr-icon-wrapper {
+    width: 68px;
+    height: 68px;
+    background: #f4faf5;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    color: #6a9678;
+    font-size: 28px;
+    box-shadow: inset 0 2px 6px rgba(255,255,255,0.9), 0 6px 14px rgba(0,0,0,0.02);
+    transition: all 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.attr-item:hover .attr-icon-wrapper {
+    background: #6a9678;
+    color: #ffffff;
+    transform: rotateY(180deg) scale(1.05);
+    box-shadow: 0 14px 28px rgba(106, 150, 120, 0.25);
+}
+
+/* Typography */
+.attr-item h3 {
+    color: #1a2f21;
+    font-weight: 800;
+    font-size: 1.55rem;
+    margin-bottom: 16px;
+    letter-spacing: -0.03em;
+}
+
+.attr-item p {
+    color: #5a635c;
+    font-size: 1.08rem;
+    line-height: 1.75;
+    margin: 0;
+    opacity: 0.9;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+    #points-of-attraction { padding: 100px 8%; }
+    .attr-item { padding: 45px 35px; border-radius: 36px; }
+    .attr-item h3 { font-size: 1.45rem; }
+}
+
+@media (max-width: 768px) {
+    #points-of-attraction { padding: 80px 5%; }
+    .attr-item { padding: 40px 30px; border-radius: 32px; }
+    .attr-item h3 { font-size: 1.3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .attr-item, .attr-item:hover, .attr-icon-wrapper, .attr-item::after {
+        transition: none !important;
+    }
+}
+
+/* ===============================
+   GLOBAL SAFETY
+================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===============================
+   DESIGN TOKENS (iOS × OxygenOS)
+================================ */
+:root {
+  --lux-bg-overlay: rgba(220, 245, 220, 0.38);
+
+  --lux-card-bg: rgba(245, 255, 235, 0.82);
+  --lux-glass: rgba(255, 255, 255, 0.74);
+  --lux-border: rgba(255, 255, 255, 0.45);
+
+  --lux-green-dark: #225522;
+  --lux-green-mid: #2d4f2d;
+  --lux-green-soft: #b9e6a2;
+
+  --lux-shadow-ambient: 0 40px 90px rgba(0, 0, 0, 0.18);
+  --lux-shadow-float: 0 14px 32px rgba(0, 0, 0, 0.22);
+
+  --lux-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* ===============================
+   POPUP OVERLAY
+================================ */
+.lux-popup {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+
+  background: var(--lux-bg-overlay);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px;
+  z-index: 9999;
+
+  animation: luxFade 0.7s var(--lux-ease);
+  overflow-y: auto;
+}
+
+/* ===============================
+   CARD CONTAINER
+================================ */
+.lux-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+
+  padding: 42px 48px 50px;
+  border-radius: 28px;
+
+  background: var(--lux-card-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+
+  border: 1px solid var(--lux-border);
+
+  box-shadow:
+    var(--lux-shadow-ambient),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -24px 40px rgba(0, 0, 0, 0.05);
+
+  transform: translateY(28px) scale(0.96);
+  animation: luxRise 0.9s var(--lux-ease) forwards;
+
+  will-change: transform;
+}
+
+/* ===============================
+   CARD GLOW (SUBTLE & PREMIUM)
+================================ */
+.lux-card::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+
+  background: radial-gradient(
+    circle at top,
+    rgba(185, 230, 162, 0.55),
+    transparent 70%
+  );
+
+  filter: blur(30px);
+  opacity: 0.35;
+  z-index: -1;
+
+  animation: luxGlow 6s ease-in-out infinite;
+}
+
+/* ===============================
+   CLOSE BUTTON
+================================ */
+.lux-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--lux-green-dark);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transition: transform 0.45s var(--lux-ease),
+              box-shadow 0.45s var(--lux-ease);
+}
+
+.lux-close:hover {
+  transform: rotate(90deg) scale(1.15);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+}
+
+/* ===============================
+   HEADER
+================================ */
+.lux-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.lux-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  margin-bottom: 14px;
+
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+
+  background: rgba(185, 230, 162, 0.55);
+  color: var(--lux-green-mid);
+}
+
+.lux-title {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  color: var(--lux-green-mid);
+}
+
+.lux-subtitle {
+  font-size: 14px;
+  color: rgba(45, 79, 45, 0.85);
+}
+
+/* ===============================
+   TIMER
+================================ */
+.lux-timer-container {
+  margin: 30px 0;
+}
+
+.lux-timer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lux-divider {
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(45, 79, 45, 0.6);
+}
+
+/* ===============================
+   TIMER UNITS
+================================ */
+.lux-unit {
+  flex: 1;
+  padding: 18px 14px;
+  text-align: center;
+
+  border-radius: 18px;
+  background: var(--lux-glass);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  transition: transform 0.45s var(--lux-ease),
+              box-shadow 0.45s var(--lux-ease);
+}
+
+.lux-unit:hover {
+  transform: translateY(-6px) scale(1.06);
+  box-shadow: var(--lux-shadow-float);
+}
+
+.lux-num {
+  display: block;
+  font-size: 30px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--lux-green-dark);
+}
+
+.lux-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(34, 85, 34, 0.85);
+}
+
+/* ===============================
+   FOOTER
+================================ */
+.lux-footer {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.lux-cta {
+  padding: 14px 30px;
+  border-radius: 999px;
+  border: none;
+
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #b9e6a2, #d0f0c0);
+  color: var(--lux-green-dark);
+
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  transition: transform 0.35s var(--lux-ease),
+              box-shadow 0.35s var(--lux-ease);
+}
+
+.lux-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.26);
+}
+
+.lux-cta:active {
+  transform: scale(0.96);
+}
+
+.lux-footer-note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(45, 79, 45, 0.7);
+}
+
+/* ===============================
+   ANIMATIONS
+================================ */
+@keyframes luxFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes luxRise {
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes luxGlow {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.45; }
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 480px) {
+  .lux-card {
+    padding: 6vw;
+    border-radius: 22px;
+  }
+
+  .lux-num {
+    font-size: 22px;
+  }
+
+  .lux-divider {
+    display: none;
+  }
+
+  .lux-timer {
+    gap: 10px;
+  }
+}
