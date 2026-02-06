@@ -249,3 +249,127 @@ closeBtn?.addEventListener("click", () => {
     { duration: 600, easing: "ease-in-out", fill: "forwards" }
   ).onfinish = () => popup.remove();
 });
+// oxygen-viewer.js (Glitch-Free Version)
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.highlight-card');
+
+    /* --- 1. Create Oxygen Viewer --- */
+    const viewer = document.createElement('div');
+    viewer.id = 'oxygen-viewer';
+    viewer.setAttribute('aria-hidden', 'true');
+    viewer.setAttribute('role', 'dialog');
+    viewer.style.opacity = 0; // start invisible
+    viewer.innerHTML = `
+        <div class="aquamorphic-blur"></div>
+        <div class="floating-particles"></div>
+        <div class="content-container">
+            <div class="close-trigger"><div class="close-pill"></div></div>
+            <div class="luxury-meta">
+                <span class="pill-tag">Agri-Excellence</span>
+                <h2 class="dynamic-title"></h2>
+            </div>
+            <div class="frame-container"><img src="" alt="View"></div>
+        </div>
+    `;
+    document.body.appendChild(viewer);
+
+    const viewerImg = viewer.querySelector('img');
+    const title = viewer.querySelector('.dynamic-title');
+    const contentContainer = viewer.querySelector('.content-container');
+    const particlesContainer = viewer.querySelector('.floating-particles');
+    const closeTrigger = viewer.querySelector('.close-trigger');
+    const blurLayer = viewer.querySelector('.aquamorphic-blur');
+
+    let isAnimating = false;
+
+    /* --- 2. Particle System --- */
+    const particleCount = 20;
+    const particles = [];
+    for (let i = 0; i < particleCount; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        const scale = 1 + Math.random() * 0.5;
+        p.style.transform = `translate(${x}%, ${y}%) scale(${scale})`;
+        particlesContainer.appendChild(p);
+        particles.push({ el: p, x, y, speedX: (Math.random()-0.5)*0.03, speedY: (Math.random()-0.5)*0.03, scaleDir: Math.random()<0.5?1:-1, scale });
+    }
+    (function animateParticles(){
+        particles.forEach(p=>{
+            p.x+=p.speedX; p.y+=p.speedY;
+            if(p.x>100)p.x=0; if(p.x<0)p.x=100;
+            if(p.y>100)p.y=0; if(p.y<0)p.y=100;
+            p.scale+=0.002*p.scaleDir;
+            if(p.scale>1.4||p.scale<0.6)p.scaleDir*=-1;
+            p.el.style.transform=`translate(${p.x}%,${p.y}%) scale(${p.scale})`;
+        });
+        requestAnimationFrame(animateParticles);
+    })();
+
+    /* --- 3. Ripple Effect --- */
+    function createRipple(e){
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        const rect = contentContainer.getBoundingClientRect();
+        ripple.style.left = `${e.clientX - rect.left}px`;
+        ripple.style.top = `${e.clientY - rect.top}px`;
+        contentContainer.appendChild(ripple);
+        ripple.animate([{transform:'scale(0)',opacity:0.6},{transform:'scale(2.5)',opacity:0}],{duration:700,easing:'cubic-bezier(0.4,0,0.2,1)',fill:'forwards'});
+        setTimeout(()=>ripple.remove(),700);
+    }
+    contentContainer.addEventListener('click', createRipple);
+
+    /* --- 4. Open / Close Viewer --- */
+    function toggleViewer(open, card=null){
+        if(isAnimating) return;
+        isAnimating=true;
+
+        if(open && card){
+            viewerImg.src=card.querySelector('img').src;
+            title.textContent=card.querySelector('h3')?.textContent||"Natural Innovation";
+
+            viewer.style.transition='opacity 0.5s ease';
+            viewer.classList.add('active');
+            viewer.setAttribute('aria-hidden','false');
+            document.body.style.overflow='hidden';
+
+            contentContainer.style.transition='none';
+            contentContainer.style.transform='scale(0.85) translateY(60px)';
+            contentContainer.style.opacity=0;
+            blurLayer.style.transition='opacity 0.5s ease';
+            blurLayer.style.opacity=0;
+
+            // trigger transition on next frame
+            requestAnimationFrame(()=>{
+                viewer.style.opacity=1;
+                contentContainer.style.transition='transform 0.7s cubic-bezier(0.22,1.61,0.36,1), opacity 0.6s ease';
+                contentContainer.style.transform='scale(1) translateY(0)';
+                contentContainer.style.opacity=1;
+                blurLayer.style.opacity=1;
+            });
+
+            setTimeout(()=>isAnimating=false,700);
+        } else {
+            contentContainer.style.transition='transform 0.5s cubic-bezier(0.55,0,0.1,1), opacity 0.5s ease';
+            contentContainer.style.transform='scale(0.85) translateY(60px)';
+            contentContainer.style.opacity=0;
+            blurLayer.style.opacity=0;
+            viewer.style.transition='opacity 0.5s ease';
+            viewer.style.opacity=0;
+
+            setTimeout(()=>{
+                viewer.classList.remove('active');
+                viewer.setAttribute('aria-hidden','true');
+                document.body.style.overflow='';
+                isAnimating=false;
+            },500);
+        }
+    }
+
+    /* --- 5. Event Listeners --- */
+    cards.forEach(card=>card.addEventListener('click',()=>toggleViewer(true,card)));
+    closeTrigger.addEventListener('click',()=>toggleViewer(false));
+    blurLayer.addEventListener('click',()=>toggleViewer(false));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape' && viewer.classList.contains('active')) toggleViewer(false)});
+});

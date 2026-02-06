@@ -107,6 +107,23 @@ body {
     justify-content: center;
     gap: 6px;
 }
+.title-with-line {
+    display: inline-block; /* ensures width is just the text */
+    position: relative;    /* needed for the pseudo-element */
+    font-weight: bold;
+    font-size: 1.2rem;    /* adjust as needed */
+}
+
+.title-with-line::after {
+    content: "";
+    display: block;
+    height: 2px;           /* thickness of underline */
+    background-color: #000; /* underline color */
+    width: 100%;           /* matches text width exactly */
+    position: absolute;
+    bottom: -4px;          /* space below text, adjust as needed */
+    left: 0;
+}
 
 .univ-name {
     font-weight: 900;
@@ -574,10 +591,16 @@ h1 {
         margin-bottom: 40px;
     }
 }
+/* --- Responsive Layout --- */
+@media (max-width: 992px) {
+    .menu { display: none; }
+    h1 { font-size: 3rem; }
+}
+
 /* --- Luxury Highlights Section (Universal Compatible) --- */
 .krishi-highlights {
     padding: 7.5rem 5%;
-    background-color: #d8e6dc; /* Fallback color */
+    background-color: #d8e6dc;
     background-image: 
         radial-gradient(circle at 10% 20%, rgba(144, 190, 150, 0.08), transparent 50%),
         radial-gradient(circle at 90% 80%, rgba(93, 138, 106, 0.06), transparent 50%),
@@ -636,84 +659,45 @@ h1 {
 .highlights-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    gap: 2.25rem;
+    gap: 2.75rem;
 }
 
-/* Highlight Card */
-.highlight-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1.5rem;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.05);
-    -webkit-backdrop-filter: blur(18px);
-    backdrop-filter: blur(18px);
-    box-shadow: 0 1.25rem 3.75rem rgba(15, 23, 42, 0.12), 0 0.375rem 1.25rem rgba(15, 23, 42, 0.08);
-    transition: transform 0.6s ease, box-shadow 0.6s ease, background 0.6s ease-in-out;
-}
-
-.highlight-card:hover,
-.highlight-card:focus {
-    transform: translateY(-0.75rem) scale(1.03);
-    box-shadow: 0 2.1875rem 5rem rgba(15, 23, 42, 0.16), 0 0.75rem 1.875rem rgba(15, 23, 42, 0.1);
-    background: rgba(255, 255, 255, 0.08);
-}
-
-/* Image Effects */
-.highlight-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 1.5rem;
-    transition: transform 1s ease, filter 1s ease;
-}
-
-.highlight-card:hover img,
-.highlight-card:focus img {
-    transform: scale(1.12) rotateZ(1deg);
-    filter: brightness(1.05);
-}
-
-/* Overlay */
-.highlight-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 2.25rem 1.875rem;
-    background: linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,0.92) 95%);
-    color: #ffffff;
-    opacity: 0;
-    transform: translateY(2.5rem);
-    transition: all 0.6s ease;
-    border-radius: 0 0 1.5rem 1.5rem;
-}
-
-.highlight-card:hover .highlight-overlay,
-.highlight-card:focus .highlight-overlay {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.highlight-overlay h3 {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 0.625rem;
-    letter-spacing: 0.3px;
-}
-
-.highlight-overlay p {
-    font-size: 0.9375rem;
-    line-height: 1.7;
-    color: rgba(255,255,255,0.9);
-}
-
-/* --- Smooth Reveal Animations --- */
+/* --- Reveal Animation (Entrance State) --- */
 .reveal-up {
     opacity: 0;
-    transform: translateY(2.5rem) scale(0.98);
-    transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    transform: translateY(3rem) scale(0.98);
+    /* Transition for the reveal ONLY */
+    transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), 
+                transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform, opacity;
+}
+
+.reveal-up.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+/* --- 1. Base Section Styles --- */
+.krishi-highlights {
+    padding: 7.5rem 5%;
+    background: linear-gradient(135deg, #e6f0e8, #d8e6dc);
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 2.75rem;
+}
+
+/* --- 2. Card Reveal Logic (Entrance) --- */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
 }
 
 .reveal-up.active {
@@ -721,25 +705,321 @@ h1 {
     transform: translateY(0) scale(1);
 }
 
-/* --- Responsive Layout --- */
-@media (max-width: 992px) {
-    .menu { display: none; }
-    h1 { font-size: 3rem; }
+/* --- 3. Highlight Card (Interaction State) --- */
+.highlight-card {
+    position: relative;
+    overflow: hidden; 
+    border-radius: 2rem; /* OxygenOS Squircle */
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 1rem 3rem rgba(15, 23, 42, 0.1);
+    
+    /* Clean Transition: Interaction only happens AFTER reveal */
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                box-shadow 0.5s ease, 
+                background 0.5s ease;
+    
+    transform-origin: center bottom;
+    z-index: 1;
+}
+
+/* Fix: Restricted Hover - Only triggers when 'active' is present */
+.reveal-up.active.highlight-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 2rem 4rem rgba(15, 23, 42, 0.15);
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 10;
+}
+
+.highlight-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.highlight-card:hover img {
+    transform: scale(1.08);
+}
+
+/* --- 0. Root Variables (Light Pista Green Theme) --- */
+:root {
+    --primary-green: #3c6e47;       /* Dark pista green */
+    --secondary-green: #6ca87a;     /* Lighter pista green */
+    --background-light: #f4f8f2;    /* Soft off-white for light theme */
+    --background-dark: #111;        /* Dark mode background */
+    --text-dark: #1a1a1a;
+    --text-light: #f1f1f1;
+    --ripple-color: rgba(108, 168, 122, 0.3); /* Light pista ripple */
+}
+
+/* --- 1. Viewer Layer --- */
+#oxygen-viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    visibility: hidden;
+    pointer-events: none;
+    overflow: hidden;
+    background: radial-gradient(circle at top left, rgba(220, 245, 220, 0.15), rgba(244, 248, 242, 0.85));
+    transition: visibility 0.5s;
+}
+
+#oxygen-viewer.active {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* --- 2. Aquamorphic Blur --- */
+.aquamorphic-blur {
+    position: absolute;
+    inset: 0;
+    background: rgba(244, 248, 242, 0.6);
+    backdrop-filter: blur(35px) saturate(150%) contrast(95%);
+    -webkit-backdrop-filter: blur(35px) saturate(150%) contrast(95%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+#oxygen-viewer.active .aquamorphic-blur {
+    opacity: 1;
+}
+
+/* --- 3. Content Container --- */
+.content-container {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    opacity: 0;
+    transform: scale(0.92) translateY(50px);
+    transition: all 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+#oxygen-viewer.active .content-container {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* --- 4. Ripple Effect --- */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out forwards;
+    background: var(--ripple-color);
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* --- 5. Viewer Content --- */
+.luxury-meta {
+    margin-bottom: clamp(1rem, 3vh, 2rem);
+    text-align: left;
+    animation: float-text 6s ease-in-out infinite alternate;
+}
+
+.pill-tag {
+    background: var(--secondary-green);
+    color: #f4f8f2;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.dynamic-title {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-top: 0.5rem;
+    letter-spacing: -0.5px;
+    animation: float-text 5s ease-in-out infinite alternate;
+}
+
+@keyframes float-text {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-8px); }
+}
+
+/* --- 6. Frame Container --- */
+.frame-container {
+    background: var(--background-light);
+    border-radius: 2.5rem;
+    overflow: hidden;
+    box-shadow: 0 40px 120px rgba(60, 110, 71, 0.12);
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.frame-container img {
+    width: 100%;
+    max-height: 65vh;
+    object-fit: contain;
+    transition: transform 0.7s ease, filter 0.7s ease;
+}
+
+.frame-container:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.03);
+}
+
+/* --- 7. Close Trigger --- */
+.close-trigger {
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.close-pill {
+    width: 60px;
+    height: 6px;
+    background: rgba(26, 26, 26, 0.12);
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+/* --- 8. Highlight Card Hover Animation --- */
+.highlight-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2rem;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 1rem 3rem rgba(15, 23, 42, 0.1);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.5s ease,
+                background 0.5s ease;
+    transform-origin: center bottom;
+    z-index: 1;
+}
+
+.highlight-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 2rem 4rem rgba(15, 23, 42, 0.15);
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 10;
+}
+
+.highlight-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.highlight-card:hover img {
+    transform: scale(1.08);
+}
+
+/* --- 9. Reveal Animation for Cards --- */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+}
+
+.reveal-up.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* --- 10. Mobile & Tablet Responsiveness --- */
+@media (max-width: 1024px) {
+    .highlight-card { border-radius: 1.8rem; }
+    .content-container { max-width: 90%; }
 }
 
 @media (max-width: 768px) {
-    #president-message { padding: 5rem 1.5rem; }
-    #president-message .info-card {
-        width: 100%;
-        border-radius: 0;
-        padding: 3.75rem 1.5rem;
-        border-left: none;
-        border-right: none;
+    /* Viewer alignment */
+    #oxygen-viewer {
+        align-items: center;       /* vertical center */
+        justify-content: center;   /* horizontal center */
+        padding: 1rem;
     }
-    .krishi-highlights { padding: 5rem 2rem; }
-    .highlight-overlay { opacity: 1; transform: translateY(0); }
-    .highlight-card { border-radius: 1.125rem; }
+
+    /* Content container adjustments */
+    .content-container {
+        width: 95%;
+        max-width: 480px;
+        transform: translateY(100%);
+        border-radius: 1.5rem;
+        overflow: hidden;
+    }
+
+    #oxygen-viewer.active .content-container {
+        transform: translateY(0);
+    }
+
+    /* Frame container adjustments */
+    .frame-container {
+        border-radius: 1.5rem;
+        box-shadow: 0 20px 60px rgba(60, 110, 71, 0.15);
+    }
+
+    /* Luxury meta adjustments */
+    .luxury-meta {
+        padding: 1.2rem;
+        margin-top: -10px;
+        background: var(--background-light);
+        border-radius: 0 0 1.5rem 1.5rem;
+        order: 2;
+    }
+
+    /* Close button */
+    .close-trigger {
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .close-pill { width: 50px; height: 5px; }
+
+    /* Highlight cards: disable transform for smoother scroll */
+    .highlight-card { transform: none !important; transition: none !important; }
 }
+
+@media (max-width: 480px) {
+    .dynamic-title { font-size: 1.5rem; }
+    .pill-tag { font-size: 0.65rem; padding: 5px 12px; }
+    .frame-container { max-height: 70vh; }
+    .luxury-meta { padding: 1rem; font-size: 0.9rem; }
+}
+
+/* --- 11. Dark Mode Compatibility --- */
+@media (prefers-color-scheme: dark) {
+    .aquamorphic-blur { background: rgba(15, 15, 15, 0.7); }
+    .dynamic-title { color: #dff0d8; }
+    .frame-container { background: var(--background-dark); }
+    .luxury-meta { background: transparent; }
+    @media (max-width: 768px) { .luxury-meta { background: #1a1a1a; } }
+}
+
+/* --- 12. High-DPI / Retina Support --- */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .frame-container { box-shadow: 0 40px 140px rgba(60, 110, 71, 0.12); }
+    .highlight-card { box-shadow: 0 1rem 3.5rem rgba(15, 23, 42, 0.12); }
+}
+
 /* --- 1. Footer Section Separator --- */
 .section-separator {
     height: 120px;
